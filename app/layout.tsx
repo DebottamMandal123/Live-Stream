@@ -1,7 +1,9 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,6 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
+      appearance={{ baseTheme: dark}}
       publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY}
       signInUrl={process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL}
       signUpUrl={process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL}
@@ -35,7 +38,13 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          {children}
+          <ThemeProvider
+            attribute={"class"}
+            forcedTheme="dark"
+            storageKey="live-stream-theme"
+          >
+            {children}
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
