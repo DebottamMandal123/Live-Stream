@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
   const eventType = evt.type;
   
   if (eventType === "user.created") {
-    const { id, username, image_url } = evt.data;
+    const { id, username, image_url } = payload.data;
     await db.user.create({
         data: {
             externalUserId : id,
